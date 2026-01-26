@@ -10,7 +10,6 @@ import DivineFortuneBox from "./components/DivineFortuneBox";
 import TutorialModal from "./components/TutorialModal";
 import FooterCTA from "./components/FooterCTA";
 
-
 const App: React.FC = () => {
   const [isGameOpen, setIsGameOpen] = useState(false);
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
@@ -58,72 +57,19 @@ const App: React.FC = () => {
         <div className="pointer-events-auto flex flex-col gap-3">
           <button
             onClick={handlePlayNow}
-            className="w-full py-6 bg-gradient-to-b from-[#fde047] via-[#eab308] to-[#854d0e] text-[#2a0101] font-black rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(234,179,8,0.3)] border-b-6 border-[#4a2a00] active:translate-y-1 active:border-b-0 transition-all text-2xl relative overflow-hidden group"
+            className="
+              w-full py-6
+              bg-gradient-to-b from-[#38bdf8] via-[#0ea5e9] to-[#0369a1]
+              text-white
+              font-black rounded-3xl
+              shadow-[0_30px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(56,189,248,0.35)]
+              border-b-6 border-[#075985]
+              active:translate-y-1 active:border-b-0
+              transition-all text-2xl relative overflow-hidden group
+            "
           >
             {tickets > 0 ? "Play Demo 🧧" : "GET MORE TICKETS 🧧"}
             <span className="block text-[11px] uppercase font-black tracking-[0.2em] opacity-80 mt-1">
               Tickets Left: {tickets}
             </span>
           </button>
-        </div>
-      </div>
-
-      {/* Scroll to top */}
-      <button
-        onClick={scrollToTop}
-        aria-label="Scroll to top"
-        className={`fixed bottom-32 right-6 md:bottom-10 md:right-10 z-[70] w-14 h-14 bg-gradient-to-b from-[#fde047] via-[#eab308] to-[#854d0e] text-[#2a0101] flex items-center justify-center rounded-full shadow-[0_10px_30px_rgba(234,179,8,0.5)] border-b-4 border-[#4a2a00] active:border-b-0 active:translate-y-1 transition-all duration-500 ease-in-out hover:scale-110 group ${
-          showFloatingButton && !isGameOpen
-            ? "opacity-100 translate-y-0 scale-100"
-            : "opacity-0 translate-y-10 scale-0 pointer-events-none"
-        }`}
-      >
-        <svg
-          className="w-6 h-6 transition-transform group-hover:-translate-y-1"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={4}
-            d="M5 10l7-7m0 0l7 7m-7-7v18"
-          />
-        </svg>
-      </button>
-
-      {/* Hero */}
-      <Hero onOpenTutorial={handleOpenTutorial} />
-
-      {/* Main Sections */}
-      <div className="bg-gradient-to-b from-[#000814] via-[#4a0404] to-[#000814] relative">
-        {/* ✅ THIS is what you are missing */}
-        <PreEventSection />
-
-        <Mechanics />
-        <HowToJoin />
-        <DivineFortuneBox />
-        <FooterCTA />
-      </div>
-
-      {/* MiniGame */}
-      <MiniGame
-        isOpen={isGameOpen}
-        onClose={() => setIsGameOpen(false)}
-        onTicketUse={useTicket}
-        tickets={tickets}
-      />
-
-      {/* Tutorial */}
-      <TutorialModal isOpen={isTutorialOpen} onClose={closeTutorial} />
-
-      <footer className="bg-black pt-16 pb-40 px-6 border-t border-[#eab308]/10 text-center text-[#eab308]/20 text-[10px] font-black uppercase tracking-[0.4em]">
-        &copy; 2026 八仙来财 | MALAYSIA • SINGAPORE EXCLUSIVE
-      </footer>
-    </main>
-  );
-};
-
-export default App;
