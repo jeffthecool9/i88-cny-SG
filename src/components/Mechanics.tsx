@@ -83,7 +83,7 @@ const Mechanics: React.FC = () => {
                     drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)]
                   "
                 >
-                  RM38,888
+                  $38,888
                 </span>
               </h3>
             </div>
