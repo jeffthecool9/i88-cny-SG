@@ -92,7 +92,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenTutorial }) => {
         <div className="overflow-hidden">
           <div className="whitespace-nowrap animate-[marquee_14s_linear_infinite]">
             <span className="mx-6">八仙来财 • 8 Immortals Treasure • CNY 2026 •</span>
-            <span className="mx-6">Collect weapons to unlock RM38888 • Angpow Demo •</span>
+            <span className="mx-6">Collect weapons to unlock $38888 • Angpow Demo •</span>
             <span className="mx-6">Malaysia • Singapore • Limited Time Event •</span>
             <span className="mx-6">八仙来财 • 8 Immortals Treasure • CNY 2026 •</span>
           </div>
