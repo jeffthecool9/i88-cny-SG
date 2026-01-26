@@ -73,3 +73,70 @@ const App: React.FC = () => {
               Tickets Left: {tickets}
             </span>
           </button>
+        </div>
+      </div>
+
+      {/* Scroll to top */}
+      <button
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        className={`fixed bottom-32 right-6 md:bottom-10 md:right-10 z-[70] w-14 h-14
+          bg-gradient-to-b from-[#fde047] via-[#eab308] to-[#854d0e]
+          text-[#2a0101]
+          flex items-center justify-center rounded-full
+          shadow-[0_10px_30px_rgba(234,179,8,0.5)]
+          border-b-4 border-[#4a2a00]
+          active:border-b-0 active:translate-y-1
+          transition-all duration-500 ease-in-out hover:scale-110 group ${
+            showFloatingButton && !isGameOpen
+              ? "opacity-100 translate-y-0 scale-100"
+              : "opacity-0 translate-y-10 scale-0 pointer-events-none"
+          }`}
+      >
+        <svg
+          className="w-6 h-6 transition-transform group-hover:-translate-y-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={4}
+            d="M5 10l7-7m0 0l7 7m-7-7v18"
+          />
+        </svg>
+      </button>
+
+      {/* Hero */}
+      <Hero onOpenTutorial={handleOpenTutorial} />
+
+      {/* Main Sections */}
+      <div className="bg-gradient-to-b from-[#000814] via-[#4a0404] to-[#000814] relative">
+        <PreEventSection />
+        <Mechanics />
+        <HowToJoin />
+        <DivineFortuneBox />
+        <FooterCTA />
+      </div>
+
+      {/* MiniGame */}
+      <MiniGame
+        isOpen={isGameOpen}
+        onClose={() => setIsGameOpen(false)}
+        onTicketUse={useTicket}
+        tickets={tickets}
+      />
+
+      {/* Tutorial */}
+      <TutorialModal isOpen={isTutorialOpen} onClose={closeTutorial} />
+
+      <footer className="bg-black pt-16 pb-40 px-6 border-t border-[#eab308]/10 text-center text-[#eab308]/20 text-[10px] font-black uppercase tracking-[0.4em]">
+        &copy; 2026 八仙来财 | MALAYSIA • SINGAPORE EXCLUSIVE
+      </footer>
+    </main>
+  );
+};
+
+export default App;
