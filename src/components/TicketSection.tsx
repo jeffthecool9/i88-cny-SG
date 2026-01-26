@@ -31,7 +31,7 @@ const TicketSection: React.FC = () => {
                 BEST VALUE
               </div>
               <div className="text-[#ef4444] text-[10px] font-black uppercase tracking-[0.3em] mb-2">Deposit</div>
-              <div className="text-6xl font-black text-white mb-8 tracking-tighter">RM{tier.amount}</div>
+              <div className="text-6xl font-black text-white mb-8 tracking-tighter">${tier.amount}</div>
               <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#eab308]/30 to-transparent mb-8"></div>
               <div className="text-[#eab308] text-7xl font-black mb-1 drop-shadow-[0_0_25px_rgba(234,179,8,0.4)]">{tier.tickets}</div>
               <div className="text-white/40 text-xs font-black uppercase tracking-[0.4em] mb-12">Tickets</div>
