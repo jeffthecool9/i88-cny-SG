@@ -26,7 +26,7 @@ export const INITIAL_WEAPONS: Weapon[] = [
 
 export const REWARD_CHANCES: { type: RewardType; weight: number }[] = [
   { type: '100 Slot Free Spins', weight: 40 },
-  { type: 'RM10 in Live Casino only' , weight: 30 },
-  { type: 'RM50 Credits' , weight: 10 },
-  { type: 'RM15 Credits', weight: 20 }
+  { type: '$10 in Live Casino only' , weight: 30 },
+  { type: '$50 Credits' , weight: 10 },
+  { type: '$15 Credits', weight: 20 }
 ];
