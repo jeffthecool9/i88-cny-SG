@@ -99,7 +99,7 @@ const DivineFortuneBox: React.FC = () => {
     drop-shadow-[0_8px_30px_rgba(0,0,0,0.55)]
   "
 >
-  RM38,888
+  $38,888
 </div>
 
 
