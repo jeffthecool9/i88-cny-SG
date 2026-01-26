@@ -1,9 +1,9 @@
 
 export type RewardType = 
   | '100 Slot Free Spins' 
-  | 'RM10 in Live Casino only' 
-  | 'RM50 Credits' 
-  | 'RM15 Credits';
+  | '$10 in Live Casino only' 
+  | '$50 Credits' 
+  | '$15 Credits';
 
 export interface TicketTier {
   amount: number;
