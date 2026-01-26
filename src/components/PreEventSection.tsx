@@ -36,7 +36,7 @@ const PreEventSection: React.FC = () => {
           <div className="flex items-center justify-between px-4">
              <div className="text-left">
                 <span className="block text-white/40 text-[9px] font-black uppercase tracking-widest">Regular Event Rate</span>
-                <span className="text-white font-black text-lg">RM{REGULAR_RATE.amount} = {REGULAR_RATE.tickets} Ticket</span>
+                <span className="text-white font-black text-lg">${REGULAR_RATE.amount} = {REGULAR_RATE.tickets} Ticket</span>
              </div>
              <div className="w-[1px] h-10 bg-white/10 mx-4"></div>
              <div className="text-right">
