@@ -27,7 +27,7 @@ const steps = [
  
   {
     title: "Event Details",
-    description: "Collect All 8 Divine Weapons to get up to RM38,888",
+    description: "Collect All 8 Divine Weapons to get up to $38,888",
     icon: "🏆",
     accent: "border-[#eab308]",
     animation: "animate-icon-divine-shine",
