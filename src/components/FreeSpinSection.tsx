@@ -101,7 +101,7 @@ const FreeSpinSection: React.FC = () => {
           </span>
 
           <h2 className="mt-6 text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
-            Deposit <span className="text-yellow-300">RM50</span>, Get
+            Deposit <span className="text-yellow-300">$50</span>, Get
             <br />
             <span
               className="
@@ -184,23 +184,9 @@ const FreeSpinSection: React.FC = () => {
                   active:translate-y-1 active:border-b-0 transition-all
                 "
               >
-                Claim Spins 🧧
+                Register Now 🧧
               </button>
 
-              <button
-                onClick={() => {
-                  const el = document.getElementById("mechanics");
-                  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}
-                className="
-                  w-full sm:w-auto px-10 py-5 rounded-2xl
-                  bg-white/10 text-white font-black uppercase tracking-widest
-                  border border-white/20 backdrop-blur-xl
-                  hover:bg-white/15 transition-all
-                "
-              >
-                View Rules
-              </button>
             </div>
           </motion.div>
 
