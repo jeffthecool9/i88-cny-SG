@@ -94,7 +94,7 @@ const FreeSpinSection: React.FC = () => {
           </span>
 
           <h2 className="mt-6 text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">
-            Deposit <span className="text-yellow-300">RM50</span>, Get
+            Deposit <span className="text-yellow-300">$50</span>, Get
             <br />
             <span
               className="
@@ -127,7 +127,7 @@ const FreeSpinSection: React.FC = () => {
                   Claim Requirement
                 </div>
                 <div className="mt-2 text-white text-3xl md:text-4xl font-black">
-                  RM50 Deposit
+                  $50 Deposit
                 </div>
               </div>
 
