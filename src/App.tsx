@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import Hero from "./components/Hero";
 import Mechanics from "./components/Mechanics";
-import PreEventSection from "./components/PreEventSection";
+import FreeSpinSection from "./components/FreeSpinSection";
 import HowToJoin from "./components/HowToJoin";
+import PreEventSection from "./components/PreEventSection";
 import FooterCTA from "./components/FooterCTA";
 import MiniGame from "./components/MiniGame";
 import DivineFortuneBox from "./components/DivineFortuneBox";
@@ -114,6 +115,7 @@ const App: React.FC = () => {
       {/* Main Sections */}
       <div className="bg-gradient-to-b from-[#000814] via-[#4a0404] to-[#000814] relative">
         <Mechanics />
+        <FreeSpinSection />
         <HowToJoin />
 
         {/* ✅ moved here: Pre-Event Section will now appear under How To Join */}
