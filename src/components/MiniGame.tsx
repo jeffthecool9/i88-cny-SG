@@ -223,7 +223,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ isOpen, onClose, onTicketUse, ticke
                   onClick={handleFinalAction}
                   className="w-full py-4 bg-gradient-to-b from-[#60A5FA] via-[#2563EB] to-[#1E3A8A] text-white rounded-xl font-black text-sm uppercase tracking-widest border-b-6 border-[#172554] active:translate-y-1 active:border-b-0"
                 >
-                  {tickets > 0 ? 'Try Again' : 'Go to Event 🧧'}
+                  {tickets > 0 ? 'Try Again' : 'Play Real Now 🧧'}
                 </button>
               </motion.div>
             )}
