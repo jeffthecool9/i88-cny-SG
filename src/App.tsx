@@ -137,7 +137,7 @@ const App: React.FC = () => {
       <TutorialModal isOpen={isTutorialOpen} onClose={closeTutorial} />
 
       <footer className="bg-black pt-16 pb-40 px-6 border-t border-[#eab308]/10 text-center text-[#eab308]/20 text-[10px] font-black uppercase tracking-[0.4em]">
-        &copy; 2026 八仙来财 | MALAYSIA • SINGAPORE EXCLUSIVE
+        &copy; 2026 八仙来财 |  SINGAPORE EXCLUSIVE
       </footer>
     </main>
   );
