@@ -23,7 +23,7 @@ const PreEventSection: React.FC = () => {
             Pre-Event <span className="text-yellow-400">Sales</span>
           </h2>
           <p className="text-white/60 font-bold uppercase tracking-widest text-[10px]">
-            Limited Time: {EVENT_DATES.preFull}
+            Limited Time 10 - 11 Feb 2026 {EVENT_DATES.preFull}
           </p>
         </motion.div>
 
@@ -84,7 +84,7 @@ const PreEventSection: React.FC = () => {
           className="mt-10 text-center"
         >
           <p className="text-white/30 text-[8px] font-bold uppercase tracking-[0.4em] leading-relaxed max-w-[300px] mx-auto">
-            Pre Event Tickets Promo only valid between 10 Feb - 12 Feb. Deposit after this will return to 1 ticket each $100 Deposit.
+            Pre Event Tickets Promo only valid between 10 Feb - 11 Feb. Deposit after this will return to 1 ticket each $100 Deposit.
           </p>
         </motion.div>
       </div>
