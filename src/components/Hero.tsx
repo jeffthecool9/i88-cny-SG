@@ -67,8 +67,9 @@ const Hero: React.FC<HeroProps> = ({ onOpenTutorial }) => {
               <motion.button
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
-                  const el = document.getElementById("register-section");
-                  if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+                  // ✅ Scroll to Weapon Quest (Mechanics section)
+                  const el = document.getElementById("mechanics");
+                  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
                 className="w-full md:w-auto px-10 py-5 rounded-2xl bg-gradient-to-b from-[#fde047] via-[#eab308] to-[#854d0e] text-[#2a0101] font-black uppercase tracking-widest shadow-[0_25px_70px_rgba(0,0,0,0.5)] border-b-8 border-[#4a2a00] active:translate-y-1 active:border-b-0 transition-all"
               >
@@ -92,7 +93,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenTutorial }) => {
         <div className="overflow-hidden">
           <div className="whitespace-nowrap animate-[marquee_14s_linear_infinite]">
             <span className="mx-6">八仙来财 • 8 Immortals Treasure • CNY 2026 •</span>
-            <span className="mx-6">Collect weapons to unlock $38888 • Angpow Demo •</span>
+            <span className="mx-6">Collect weapons to unlock RM38888 • Angpow Demo •</span>
             <span className="mx-6">Malaysia • Singapore • Limited Time Event •</span>
             <span className="mx-6">八仙来财 • 8 Immortals Treasure • CNY 2026 •</span>
           </div>
