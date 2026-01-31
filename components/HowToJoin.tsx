@@ -1,10 +1,17 @@
 import React from "react";
 import { motion } from "framer-motion";
+// 🔴 IMPORT TRACKER
+import { trackEvent } from "./CountdownTimer";
 
 /* SAME CTA LOOK */
-const CTA_URL = "https://www.palacehub8.com/uRzAiwOg"; // 🔴 CHANGE THIS
+const CTA_URL = "https://www.palacehub8.com/LlZEMHit"; 
 
 const HowToJoin: React.FC = () => {
+  // 🔴 THIS IS THE FIX: Explicitly naming it "CTA Button 3"
+  const handleJoinClick = () => {
+    trackEvent("CTA Button 3", { location: "Footer Section" });
+  };
+
   return (
     <section className="py-24 px-6 bg-transparent relative">
       <div className="max-w-md mx-auto relative z-10">
@@ -33,7 +40,6 @@ const HowToJoin: React.FC = () => {
             <div className="stepGold w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl flex-shrink-0">
               <span className="stepNum">1</span>
             </div>
-
             <div>
               <h3 className="goldText font-black text-xl uppercase tracking-tighter">
                 Create Account
@@ -54,7 +60,6 @@ const HowToJoin: React.FC = () => {
             <div className="stepGold w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl flex-shrink-0">
               <span className="stepNum">2</span>
             </div>
-
             <div>
               <h3 className="goldText font-black text-xl uppercase tracking-tighter">
                 Event Promotion
@@ -76,7 +81,6 @@ const HowToJoin: React.FC = () => {
             <div className="stepGold w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl flex-shrink-0">
               <span className="stepNum">3</span>
             </div>
-
             <div>
               <h3 className="goldText font-black text-xl uppercase tracking-tighter">
                 Claim & Explore
@@ -109,6 +113,7 @@ const HowToJoin: React.FC = () => {
             href={CTA_URL}
             target="_blank"
             rel="noreferrer"
+            onClick={handleJoinClick} // 🔴 ADDED CLICK HANDLER HERE
             className="inline-flex items-center justify-center gap-3
                        px-9 py-4 rounded-full goldButton
                        hover:scale-[1.03] active:scale-[0.97]
