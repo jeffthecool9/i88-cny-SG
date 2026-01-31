@@ -7,12 +7,12 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.12 },
     },
   };
 
   const item: Variants = {
-    hidden: { opacity: 0, y: 10, scale: 0.985 },
+    hidden: { opacity: 0, y: 10, scale: 0.98 },
     show: {
       opacity: 1,
       y: 0,
@@ -28,7 +28,7 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
-      {/* ===== Background ===== */}
+      {/* ===== Background image (public/cny-bg.png) ===== */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
           src="/cny-bg.png"
@@ -36,96 +36,71 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           className="w-full h-full object-cover brightness-105 contrast-105"
           draggable={false}
         />
-        {/* Light readability only (no heavy fade) */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.06)_0%,rgba(0,0,0,0.10)_58%,rgba(0,0,0,0.16)_100%)]" />
+
+        {/* ✅ Keep original brightness.
+            Only a LIGHT vignette for readability (no heavy black fade). */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(255,255,255,0.06)_0%,rgba(0,0,0,0.12)_55%,rgba(0,0,0,0.18)_100%)]" />
       </div>
 
-      {/* ===== Art-directed overlay canvas ===== */}
+      {/* ✅ Proper layout: flex column
+          Top content uses space, bottom dock stays LOW and clean */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto w-full max-w-xl px-6 min-h-screen"
+        className="relative z-10 mx-auto w-full max-w-xl px-6
+                   min-h-screen flex flex-col"
       >
-        {/* =========================
-            TOP SAFE ZONE (Logo)
-            - Keep small and high, not disturbing title
-        ========================== */}
-        <motion.div
-          variants={item}
-          className="absolute left-1/2 -translate-x-1/2"
-          style={{ top: "clamp(14px, 2.8vh, 24px)" }}
-        >
-          <img
-            src="/android-chrome-192x192.png"
-            alt="i88"
-            className="h-12 sm:h-14 w-auto object-contain"
-            draggable={false}
-          />
-        </motion.div>
+        {/* ===== TOP CONTENT (uses the empty space better) ===== */}
+        <div className="pt-10 sm:pt-12 text-center">
+          {/* Logo */}
+          <motion.div variants={item} className="flex justify-center mb-4">
+            <img
+              src="/android-chrome-192x192.png"
+              alt="i88"
+              className="h-20 sm:h-24 w-auto object-contain"
+              draggable={false}
+            />
+          </motion.div>
 
-        {/* =========================
-            TITLE ZONE (Big 八仙来财)
-            - Anchored to top third, never drifts down
-        ========================== */}
-        <motion.div
-          variants={item}
-          className="absolute left-1/2 -translate-x-1/2 text-center w-full"
-          style={{ top: "clamp(54px, 9vh, 88px)" }}
-        >
-          <h1 className="font-black leading-[0.84] uppercase tracking-tighter flex flex-col items-center">
-            <span className="block text-[64px] sm:text-[76px] text-white/95">
-              八仙
-            </span>
-            <span className="laicai-gold-flat text-[64px] sm:text-[76px]">
-              来财
-            </span>
-          </h1>
+          {/* Title */}
+          <motion.div variants={item}>
+            <h1 className="text-7xl sm:text-8xl font-black leading-[0.85] uppercase tracking-tighter flex flex-col items-center">
+              <span className="block text-white/95">八仙</span>
+              <span className="laicai-gold-flat">来财</span>
+            </h1>
 
-          <div className="mt-3 flex items-center justify-center gap-4">
-            <div className="h-px w-10 bg-[#F9D976]/50" />
-            <p className="text-[#fff3d6] font-black text-xs uppercase tracking-[0.45em]">
-              8 Immortals Treasure
+            <div className="mt-3 flex items-center justify-center gap-4">
+              <div className="h-px w-10 bg-[#F9D976]/50" />
+              <p className="text-[#fff3d6] font-black text-xs uppercase tracking-[0.45em]">
+                8 Immortals Treasure
+              </p>
+              <div className="h-px w-10 bg-[#F9D976]/50" />
+            </div>
+
+            {/* ✅ Gold-ish headline copy (more character than plain white) */}
+            <p className="mt-4 text-[15px] sm:text-base leading-relaxed max-w-[520px] mx-auto heroGoldCopy">
+              Play with i88 and get rewarded instantly. Try the demo spin below and
+              unlock your welcome reward after registration.
             </p>
-            <div className="h-px w-10 bg-[#F9D976]/50" />
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
-        {/* =========================
-            COPY ZONE (Move UP)
-            - Must NOT sit on immortals
-            - Keep it in the “red area” above the artwork
-        ========================== */}
-        <motion.div
-          variants={item}
-          className="absolute left-1/2 -translate-x-1/2 text-center w-full px-2"
-          style={{ top: "clamp(300px, 42vh, 360px)" }}
-        >
-          <p className="heroGoldCopy text-[14px] sm:text-[16px] leading-relaxed max-w-[520px] mx-auto">
-            Play with i88 and get rewarded instantly. Try the demo spin below and
-            unlock your welcome reward after registration.
-          </p>
-        </motion.div>
+        {/* ===== SPACER (this is what “uses space smartly”) ===== */}
+        <div className="flex-1" />
 
-        {/* =========================
-            BOTTOM BAND ZONE (Timer + CTA)
-            - LOCKED to bottom area so it stays on the blue band
-            - This is the key: it will NOT float up onto the immortals
-        ========================== */}
-        <div
-          className="absolute left-1/2 -translate-x-1/2 w-full px-6"
-          style={{ bottom: "clamp(14px, 2.5vh, 26px)" }}
-        >
-          {/* Dock strip only behind timer+cta (keeps text readable, not full-screen fade) */}
-          <div className="mx-auto w-full max-w-xl rounded-[28px] p-4 sm:p-5 dockStrip">
-            {/* Timer (make labels readable against busy art) */}
-            <motion.div variants={item} className="flex justify-center mb-4">
+        {/* ===== BOTTOM DOCK (LOWER so it doesn't block the immortals) ===== */}
+        <div className="pb-8 sm:pb-10">
+          {/* a subtle dock panel to separate from busy artwork (NOT black fade) */}
+          <div className="mx-auto w-full flex flex-col items-center">
+            {/* Timer */}
+            <motion.div variants={item} className="w-full flex justify-center mb-5">
               <CountdownTimer pageVariant="cny_visual_v2" />
             </motion.div>
 
-            {/* CTA */}
-            <motion.div variants={item} className="flex justify-center">
-              <div className="relative w-[96%] sm:w-[86%]">
+            {/* CTA (moved DOWN naturally, with breathing space) */}
+            <motion.div variants={item} className="w-full flex justify-center">
+              <div className="relative w-[94%] sm:w-[86%]">
                 <div
                   className="absolute -inset-1 rounded-[2.6rem] blur-xl opacity-30 hover:opacity-45 transition duration-700"
                   style={{
@@ -169,32 +144,19 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
+          -webkit-text-stroke: 0;
           text-shadow:
             0 0 14px rgba(250,217,118,0.35),
             0 0 36px rgba(224,170,62,0.25);
           letter-spacing: 0.02em;
         }
 
-        /* More “character” than plain white */
+        /* ✅ Make the hero paragraph more “premium” + readable without looking plain */
         .heroGoldCopy{
-          color: rgba(255, 244, 214, 0.95);
+          color: rgba(255, 244, 214, 0.92);
           text-shadow:
             0 2px 16px rgba(0,0,0,0.55),
-            0 0 24px rgba(224,170,62,0.12);
-        }
-
-        /* Dock only behind timer + CTA */
-        .dockStrip{
-          background: linear-gradient(
-            180deg,
-            rgba(0,0,0,0.18) 0%,
-            rgba(0,0,0,0.30) 100%
-          );
-          border: 1px solid rgba(249,242,149,0.14);
-          box-shadow:
-            0 16px 60px rgba(0,0,0,0.45),
-            inset 0 1px 0 rgba(255,255,255,0.05);
-          backdrop-filter: blur(10px);
+            0 0 22px rgba(224,170,62,0.10);
         }
       `}</style>
     </section>
