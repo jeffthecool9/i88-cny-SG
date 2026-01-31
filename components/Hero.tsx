@@ -27,8 +27,8 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
   };
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
-      {/* ===== Background image (public/cny-bg.png) ===== */}
+    <section className="relative h-[100dvh] w-full overflow-hidden">
+      {/* ===== Background image ===== */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
           src="/cny-bg.png"
@@ -36,98 +36,102 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           className="w-full h-full object-cover brightness-105 contrast-105"
           draggable={false}
         />
-
-        {/* ✅ Keep original brightness.
-            Only a LIGHT vignette for readability (no heavy black fade). */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(255,255,255,0.06)_0%,rgba(0,0,0,0.12)_55%,rgba(0,0,0,0.18)_100%)]" />
+        {/* Subtle vignette to help text readability without darkening the art too much */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(0,0,0,0)_40%,rgba(0,0,0,0.3)_100%)]" />
       </div>
 
-      {/* ✅ Proper layout: flex column
-          Top content uses space, bottom dock stays LOW and clean */}
+      {/* ===== Main Content Container ===== */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto w-full max-w-xl px-6
-                   min-h-screen flex flex-col"
+        className="relative z-10 mx-auto w-full max-w-xl px-5
+                   h-full flex flex-col justify-between" 
+        // ^ justify-between pushes Top and Bottom apart to reveal the middle art
       >
-        {/* ===== TOP CONTENT (uses the empty space better) ===== */}
-        <div className="pt-10 sm:pt-12 text-center">
-          {/* Logo */}
-          <motion.div variants={item} className="flex justify-center mb-4">
+        
+        {/* ===== TOP CONTENT (Lifted Upwards) ===== */}
+        {/* Reduced top padding from pt-10 to pt-5 to clear the Immortals' heads */}
+        <div className="pt-5 text-center flex flex-col items-center">
+          
+          {/* Logo - Made slightly smaller to save vertical space */}
+          <motion.div variants={item} className="mb-2">
             <img
               src="/android-chrome-192x192.png"
               alt="i88"
-              className="h-20 sm:h-24 w-auto object-contain"
+              className="h-16 sm:h-20 w-auto object-contain"
               draggable={false}
             />
           </motion.div>
 
-          {/* Title */}
-          <motion.div variants={item}>
-            <h1 className="text-7xl sm:text-8xl font-black leading-[0.85] uppercase tracking-tighter flex flex-col items-center">
-              <span className="block text-white/95">八仙</span>
+          {/* Title Area */}
+          <motion.div variants={item} className="w-full">
+            <h1 className="text-6xl sm:text-7xl font-black leading-[0.85] uppercase tracking-tighter flex flex-col items-center">
+              <span className="block text-white/95 filter drop-shadow-lg">八仙</span>
               <span className="laicai-gold-flat">来财</span>
             </h1>
 
-            <div className="mt-3 flex items-center justify-center gap-4">
-              <div className="h-px w-10 bg-[#F9D976]/50" />
-              <p className="text-[#fff3d6] font-black text-xs uppercase tracking-[0.45em]">
+            {/* Subtitle Line */}
+            <div className="mt-2 flex items-center justify-center gap-3 opacity-90">
+              <div className="h-px w-8 bg-[#F9D976]/50" />
+              <p className="text-[#fff3d6] font-bold text-[10px] sm:text-xs uppercase tracking-[0.35em] text-shadow-sm">
                 8 Immortals Treasure
               </p>
-              <div className="h-px w-10 bg-[#F9D976]/50" />
+              <div className="h-px w-8 bg-[#F9D976]/50" />
             </div>
 
-            {/* ✅ Gold-ish headline copy (more character than plain white) */}
-            <p className="mt-4 text-[15px] sm:text-base leading-relaxed max-w-[520px] mx-auto heroGoldCopy">
+            {/* Description - Constrained width to prevent it from covering side art */}
+            <p className="mt-3 text-sm leading-tight max-w-[340px] mx-auto heroGoldCopy">
               Play with i88 and get rewarded instantly. Try the demo spin below and
-              unlock your welcome reward after registration.
+              unlock your welcome reward.
             </p>
           </motion.div>
         </div>
 
-        {/* ===== SPACER (this is what “uses space smartly”) ===== */}
-        <div className="flex-1" />
+        {/* ===== MIDDLE VOID ===== */}
+        {/* This invisible spacer ensures the middle art is fully visible */}
+        <div className="flex-grow" /> 
 
-        {/* ===== BOTTOM DOCK (LOWER so it doesn't block the immortals) ===== */}
-        <div className="pb-8 sm:pb-10">
-          {/* a subtle dock panel to separate from busy artwork (NOT black fade) */}
-          <div className="mx-auto w-full flex flex-col items-center">
-            {/* Timer */}
-            <motion.div variants={item} className="w-full flex justify-center mb-5">
-              <CountdownTimer pageVariant="cny_visual_v2" />
-            </motion.div>
+        {/* ===== BOTTOM DOCK (Pushed Downwards) ===== */}
+        {/* Reduced padding to let the Treasure Chest show above the button */}
+        <div className="pb-6 sm:pb-8 w-full flex flex-col items-center">
+          
+          {/* Timer - Compacted margin */}
+          <motion.div variants={item} className="w-full flex justify-center mb-3">
+            <CountdownTimer pageVariant="cny_visual_v2" />
+          </motion.div>
 
-            {/* CTA (moved DOWN naturally, with breathing space) */}
-            <motion.div variants={item} className="w-full flex justify-center">
-              <div className="relative w-[94%] sm:w-[86%]">
-                <div
-                  className="absolute -inset-1 rounded-[2.6rem] blur-xl opacity-30 hover:opacity-45 transition duration-700"
-                  style={{
-                    background:
-                      "linear-gradient(90deg,#F9D976,#E0AA3E,#FAF398,#B88A44)",
-                  }}
-                />
-                <button
-                  onClick={handleCtaClick}
-                  className="relative w-full py-6 rounded-[2.6rem]
-                             font-black text-xl sm:text-2xl uppercase tracking-widest
-                             shadow-[0_25px_60px_rgba(0,0,0,0.55)]
-                             transition-transform hover:-translate-y-1 active:translate-y-1
-                             border-b-8"
-                  style={{
-                    background:
-                      "linear-gradient(180deg,#fff7cc,#FAF398,#F9D976,#E0AA3E,#B88A44)",
-                    color: "#7a0606",
-                    borderBottomColor: "#7a5a20",
-                  }}
-                >
-                  Pre-Register Now
-                </button>
-              </div>
-            </motion.div>
-          </div>
+          {/* CTA Button */}
+          <motion.div variants={item} className="w-full flex justify-center">
+            <div className="relative w-[90%] sm:w-[80%]">
+              {/* Glow Effect */}
+              <div
+                className="absolute -inset-1 rounded-[2.6rem] blur-xl opacity-30 hover:opacity-45 transition duration-700"
+                style={{
+                  background:
+                    "linear-gradient(90deg,#F9D976,#E0AA3E,#FAF398,#B88A44)",
+                }}
+              />
+              <button
+                onClick={handleCtaClick}
+                className="relative w-full py-5 sm:py-6 rounded-[2.6rem]
+                           font-black text-xl sm:text-2xl uppercase tracking-widest
+                           shadow-[0_10px_30px_rgba(0,0,0,0.6)]
+                           transition-transform hover:-translate-y-1 active:translate-y-1
+                           border-b-[6px]"
+                style={{
+                  background:
+                    "linear-gradient(180deg,#fff7cc,#FAF398,#F9D976,#E0AA3E,#B88A44)",
+                  color: "#7a0606",
+                  borderBottomColor: "#7a5a20",
+                }}
+              >
+                Pre-Register Now
+              </button>
+            </div>
+          </motion.div>
         </div>
+
       </motion.div>
 
       {/* ===== Styles ===== */}
@@ -151,12 +155,14 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           letter-spacing: 0.02em;
         }
 
-        /* ✅ Make the hero paragraph more “premium” + readable without looking plain */
         .heroGoldCopy{
-          color: rgba(255, 244, 214, 0.92);
-          text-shadow:
-            0 2px 16px rgba(0,0,0,0.55),
-            0 0 22px rgba(224,170,62,0.10);
+          color: rgba(255, 244, 214, 0.95);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Utility helper for stronger shadows on small text */
+        .text-shadow-sm {
+           text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
       `}</style>
     </section>
