@@ -23,7 +23,7 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
 
   const handleCtaClick = () => {
     trackEvent("cta_click", { cta_id: "hero_register_main" });
-    window.open("https://www.palacehub8.com/LlZEMHit", "_blank");
+    window.open("https://www.palacehub8.com/uRzAiwOg", "_blank");
   };
 
   return (
