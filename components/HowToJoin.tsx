@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 /* SAME CTA LOOK */
-const CTA_URL = "https://www.palacehub8.com/LlZEMHit"; // 🔴 CHANGE THIS
+const CTA_URL = "https://www.palacehub8.com/uRzAiwOg"; // 🔴 CHANGE THIS
 
 const HowToJoin: React.FC = () => {
   return (
@@ -60,7 +60,7 @@ const HowToJoin: React.FC = () => {
                 Event Promotion
               </h3>
               <p className="text-[#00A3FF] text-sm font-bold uppercase tracking-wide leading-relaxed mt-2">
-                Deposit <span className="text-white">RM50</span> to Get{" "}
+                Deposit <span className="text-white">$50</span> to Get{" "}
                 <span className="text-white">88 Free Spins</span>
               </p>
             </div>
