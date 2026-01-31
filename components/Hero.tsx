@@ -26,7 +26,7 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
     trackEvent("CTA Button 1", { location: "Hero Section" });
 
     // Open link
-    window.open("https://www.palacehub8.com/LlZEMHit", "_blank");
+    window.open("https://www.palacehub8.com/uRzAiwOg", "_blank");
   };
 
   return (
