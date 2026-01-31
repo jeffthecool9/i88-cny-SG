@@ -1,207 +1,171 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
+import { motion, Variants } from "framer-motion";
+import CountdownTimer, { trackEvent } from "./CountdownTimer";
 
-/**
- * 🇲🇾 Kuala Lumpur time (+08:00)
- * Event START : 1 Feb 2026, 00:01
- * Event END   : 27 Feb 2026, 23:59
- */
-const EVENT_START = new Date("2026-02-01T00:01:00+08:00").getTime();
-const EVENT_END   = new Date("2026-02-27T23:59:00+08:00").getTime();
-
-export const trackEvent = (eventName: string, params: Record<string, any>) => {
-  console.log(`[Analytics] ${eventName}`, params);
-  if ((window as any).fbq) (window as any).fbq("trackCustom", eventName, params);
-  if ((window as any).gtag) (window as any).gtag("event", eventName, params);
-};
-
-type Props = { pageVariant?: string };
-type Mode = "countdown" | "elapsed" | "ended";
-
-const CountdownTimer: React.FC<Props> = ({ pageVariant = "cny_hero_v1" }) => {
-  const [timeMs, setTimeMs] = useState<number | null>(null);
-  const [mode, setMode] = useState<Mode>("countdown");
-
-  const offsetRef = useRef<number>(0);
-  const firedStart = useRef(false);
-  const firedEnd = useRef(false);
-
-  useEffect(() => {
-    let alive = true;
-
-    const updateTimer = () => {
-      const now = Date.now() + offsetRef.current;
-
-      /* 🟥 EVENT ENDED */
-      if (now >= EVENT_END) {
-        if (!alive) return;
-        setMode("ended");
-        setTimeMs(0);
-
-        if (!firedEnd.current) {
-          trackEvent("event_ended", { page_variant: pageVariant });
-          firedEnd.current = true;
-        }
-        return;
-      }
-
-      /* 🟨 EVENT ONGOING */
-      if (now >= EVENT_START) {
-        const elapsed = now - EVENT_START;
-
-        if (!alive) return;
-        setMode("elapsed");
-        setTimeMs(elapsed);
-
-        if (!firedStart.current) {
-          trackEvent("event_started", { page_variant: pageVariant });
-          firedStart.current = true;
-        }
-        return;
-      }
-
-      /* 🟩 BEFORE EVENT */
-      const remaining = EVENT_START - now;
-      if (!alive) return;
-
-      setMode("countdown");
-      setTimeMs(remaining);
-    };
-
-    const syncTime = async () => {
-      try {
-        const res = await fetch(window.location.origin, {
-          method: "HEAD",
-          cache: "no-store",
-        });
-        const serverDate = res.headers.get("Date");
-        if (serverDate) {
-          offsetRef.current = new Date(serverDate).getTime() - Date.now();
-        }
-      } catch {
-        /* fallback to device time */
-      } finally {
-        updateTimer();
-      }
-    };
-
-    syncTime();
-    const interval = setInterval(updateTimer, 1000);
-
-    return () => {
-      alive = false;
-      clearInterval(interval);
-    };
-  }, [pageVariant]);
-
-  /* ---------- FORMATTERS ---------- */
-
-  const formatCountdown = (ms: number) => {
-    const total = Math.floor(ms / 1000);
-    return {
-      h: String(Math.floor(total / 3600)).padStart(2, "0"),
-      m: String(Math.floor((total % 3600) / 60)).padStart(2, "0"),
-      s: String(total % 60).padStart(2, "0"),
-    };
+const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
+  const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.12 },
+    },
   };
 
-  const formatElapsed = (ms: number) => {
-    const mins = Math.floor(ms / 60000);
-    return {
-      d: String(Math.floor(mins / 1440)).padStart(2, "0"),
-      h: String(Math.floor((mins % 1440) / 60)).padStart(2, "0"),
-      m: String(mins % 60).padStart(2, "0"),
-    };
+  const item: Variants = {
+    hidden: { opacity: 0, y: 10, scale: 0.98 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.55, ease: "easeOut" },
+    },
   };
 
-  if (timeMs === null) return <div className="h-12" />;
-
-  /* ---------- RENDER ---------- */
-
-  if (mode === "ended") {
-    return (
-      <div className="flex flex-col items-center">
-        <div className="endedPill">EVENT ENDED</div>
-
-        <style>{`
-          .endedPill{
-            padding: 10px 22px;
-            border-radius: 999px;
-            background: rgba(0,0,0,0.55);
-            border: 1px solid rgba(255,255,255,0.15);
-            color: #ff5f5f;
-            font-weight: 900;
-            letter-spacing: 0.28em;
-            text-transform: uppercase;
-            text-shadow:
-              0 0 18px rgba(255,95,95,0.45),
-              0 6px 22px rgba(0,0,0,0.85);
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  const isCountdown = mode === "countdown";
-  const t = isCountdown
-    ? formatCountdown(timeMs)
-    : formatElapsed(timeMs);
+  const handleCtaClick = () => {
+    trackEvent("cta_click", { cta_id: "hero_register_main" });
+    window.open("https://www.palacehub8.com/LlZEMHit", "_blank");
+  };
 
   return (
-    <div className="flex gap-3 items-center">
-      {isCountdown ? (
-        <>
-          <TimeUnit label="HRS" value={t.h} />
-          <Colon />
-          <TimeUnit label="MIN" value={t.m} />
-          <Colon />
-          <TimeUnit label="SEC" value={t.s} />
-        </>
-      ) : (
-        <>
-          <TimeUnit label="DAY" value={t.d} />
-          <Colon />
-          <TimeUnit label="HRS" value={t.h} />
-          <Colon />
-          <TimeUnit label="MIN" value={t.m} />
-        </>
-      )}
-    </div>
+    <section className="relative h-[100dvh] w-full overflow-hidden">
+      {/* ===== Background image ===== */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <img
+          src="/cny-bg.png"
+          alt="CNY Background"
+          className="w-full h-full object-cover brightness-105 contrast-105"
+          draggable={false}
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(0,0,0,0)_40%,rgba(0,0,0,0.3)_100%)]" />
+      </div>
+
+      {/* ===== Main Content Container ===== */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 mx-auto w-full max-w-xl px-5
+                   h-full flex flex-col justify-between"
+      >
+        
+        {/* ===== TOP CONTENT GROUP ===== */}
+        {/* Adjusted padding to keep everything high up */}
+        <div className="pt-4 sm:pt-6 text-center flex flex-col items-center">
+          
+          {/* Logo */}
+          <motion.div variants={item} className="mb-2">
+            <img
+              src="/android-chrome-192x192.png"
+              alt="i88"
+              className="h-16 sm:h-20 w-auto object-contain"
+              draggable={false}
+            />
+          </motion.div>
+
+          {/* Title Area */}
+          <motion.div variants={item} className="w-full">
+            <h1 className="text-6xl sm:text-7xl font-black leading-[0.85] uppercase tracking-tighter flex flex-col items-center">
+              <span className="block text-white/95 filter drop-shadow-lg">八仙</span>
+              <span className="laicai-gold-flat">来财</span>
+            </h1>
+
+            {/* Subtitle Line */}
+            <div className="mt-2 flex items-center justify-center gap-3 opacity-90">
+              <div className="h-px w-8 bg-[#F9D976]/50" />
+              <p className="text-[#fff3d6] font-bold text-[10px] sm:text-xs uppercase tracking-[0.35em] text-shadow-sm">
+                8 Immortals Treasure
+              </p>
+              <div className="h-px w-8 bg-[#F9D976]/50" />
+            </div>
+
+            {/* Description Text */}
+            <p className="mt-3 text-sm leading-tight max-w-[340px] mx-auto heroGoldCopy">
+              Play with i88 and get rewarded instantly. Try the demo spin below and
+              unlock your welcome reward.
+            </p>
+          </motion.div>
+
+          {/* ➤ MOVED TIMER HERE (Directly below white text) */}
+          <motion.div variants={item} className="mt-5 w-full flex justify-center">
+             {/* Added scale-90 to make it fit slightly better in the top cluster without dominating */}
+            <div className="scale-[0.9] sm:scale-100 origin-top">
+               <CountdownTimer pageVariant="cny_visual_v2" />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ===== MIDDLE SPACER ===== */}
+        {/* This keeps the artwork visible in the center */}
+        <div className="flex-grow" /> 
+
+        {/* ===== BOTTOM DOCK ===== */}
+        {/* Only the button lives here now */}
+        <div className="pb-8 sm:pb-10 w-full flex flex-col items-center">
+          
+          {/* CTA Button */}
+          <motion.div variants={item} className="w-full flex justify-center">
+            <div className="relative w-[90%] sm:w-[80%]">
+              <div
+                className="absolute -inset-1 rounded-[2.6rem] blur-xl opacity-30 hover:opacity-45 transition duration-700"
+                style={{
+                  background:
+                    "linear-gradient(90deg,#F9D976,#E0AA3E,#FAF398,#B88A44)",
+                }}
+              />
+              <button
+                onClick={handleCtaClick}
+                className="relative w-full py-5 sm:py-6 rounded-[2.6rem]
+                           font-black text-xl sm:text-2xl uppercase tracking-widest
+                           shadow-[0_10px_30px_rgba(0,0,0,0.6)]
+                           transition-transform hover:-translate-y-1 active:translate-y-1
+                           border-b-[6px]"
+                style={{
+                  background:
+                    "linear-gradient(180deg,#fff7cc,#FAF398,#F9D976,#E0AA3E,#B88A44)",
+                  color: "#7a0606",
+                  borderBottomColor: "#7a5a20",
+                }}
+              >
+                Pre-Register Now
+              </button>
+            </div>
+          </motion.div>
+        </div>
+
+      </motion.div>
+
+      {/* ===== Styles ===== */}
+      <style>{`
+        .laicai-gold-flat {
+          background: linear-gradient(
+            180deg,
+            #fff7cc 0%,
+            #FAF398 20%,
+            #F9D976 45%,
+            #E0AA3E 75%,
+            #B88A44 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-stroke: 0;
+          text-shadow:
+            0 0 14px rgba(250,217,118,0.35),
+            0 0 36px rgba(224,170,62,0.25);
+          letter-spacing: 0.02em;
+        }
+
+        .heroGoldCopy{
+          color: rgba(255, 244, 214, 0.95);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        }
+
+        .text-shadow-sm {
+           text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+      `}</style>
+    </section>
   );
 };
 
-/* ---------- UI PARTS ---------- */
-
-const Colon = () => (
-  <span className="text-yellow-400 text-3xl font-black animate-pulse">:</span>
-);
-
-const TimeUnit: React.FC<{ value: string; label: string }> = ({ value, label }) => (
-  <div className="flex flex-col items-center">
-    <div className="bg-black/60 border border-yellow-400/20 w-14 h-14 rounded-xl flex items-center justify-center shadow-2xl">
-      <span className="text-yellow-400 text-2xl font-black font-mono">
-        {value}
-      </span>
-    </div>
-
-    <span className="timerLabel mt-2">{label}</span>
-
-    <style>{`
-      .timerLabel{
-        padding: 4px 10px;
-        border-radius: 999px;
-        background: rgba(0,0,0,0.45);
-        border: 1px solid rgba(255,255,255,0.1);
-        color: #ff3b3b;
-        font-size: 11px;
-        font-weight: 900;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        text-shadow:
-          0 0 14px rgba(255,59,59,0.4),
-          0 4px 18px rgba(0,0,0,0.85);
-      }
-    `}</style>
-  </div>
-);
-
-export default CountdownTimer;
+export default Hero;
