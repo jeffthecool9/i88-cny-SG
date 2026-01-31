@@ -36,7 +36,8 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           className="w-full h-full object-cover brightness-105 contrast-105"
           draggable={false}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(0,0,0,0)_40%,rgba(0,0,0,0.3)_100%)]" />
+        {/* Added a slight gradient at the very bottom to help the button pop off the floor */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)70%,rgba(0,0,0,0.4)100%)]" />
       </div>
 
       {/* ===== Main Content Container ===== */}
@@ -50,7 +51,6 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
         
         {/* ===== TOP CONTENT GROUP ===== */}
         <div className="pt-4 sm:pt-6 text-center flex flex-col items-center">
-          
           {/* Logo */}
           <motion.div variants={item} className="mb-2">
             <img
@@ -68,7 +68,6 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
               <span className="laicai-gold-flat">来财</span>
             </h1>
 
-            {/* Subtitle Line */}
             <div className="mt-2 flex items-center justify-center gap-3 opacity-90">
               <div className="h-px w-8 bg-[#F9D976]/50" />
               <p className="text-[#fff3d6] font-bold text-[10px] sm:text-xs uppercase tracking-[0.35em] text-shadow-sm">
@@ -77,16 +76,14 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
               <div className="h-px w-8 bg-[#F9D976]/50" />
             </div>
 
-            {/* Description Text */}
             <p className="mt-3 text-sm leading-tight max-w-[340px] mx-auto heroGoldCopy">
               Play with i88 and get rewarded instantly. Try the demo spin below and
               unlock your welcome reward.
             </p>
           </motion.div>
 
-          {/* ➤ MOVED TIMER HERE (Directly below white text) */}
+          {/* Timer situated below text */}
           <motion.div variants={item} className="mt-5 w-full flex justify-center">
-             {/* Scaled slightly down to fit better in the top cluster */}
             <div className="scale-[0.9] sm:scale-100 origin-top">
                <CountdownTimer pageVariant="cny_visual_v2" />
             </div>
@@ -94,11 +91,11 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
         </div>
 
         {/* ===== MIDDLE SPACER ===== */}
-        {/* Keeps the artwork visible in the center */}
         <div className="flex-grow" /> 
 
-        {/* ===== BOTTOM DOCK ===== */}
-        <div className="pb-8 sm:pb-10 w-full flex flex-col items-center">
+        {/* ===== BOTTOM DOCK (Pushed lower) ===== */}
+        {/* ✅ CHANGE HERE: Reduced padding from pb-8 to pb-4 to move button down */}
+        <div className="pb-4 sm:pb-5 w-full flex flex-col items-center">
           
           {/* CTA Button */}
           <motion.div variants={item} className="w-full flex justify-center">
