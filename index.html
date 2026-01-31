@@ -38,13 +38,8 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ✅ Wheel 2.0 expects these utility classes */
-    .cinzel {
-      font-family: "Cinzel", serif;
-    }
-    .montserrat {
-      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
+    .cinzel { font-family: "Cinzel", serif; }
+    .montserrat { font-family: "Montserrat", sans-serif; }
 
     /* Global Texture Overlay */
     .bg-paper-texture {
@@ -85,9 +80,7 @@
       background: linear-gradient(135deg, var(--cny-red-bright) 0%, var(--cny-red-deep) 100%);
     }
 
-    button {
-      touch-action: manipulation;
-    }
+    button { touch-action: manipulation; }
   </style>
 
   <script type="importmap">
@@ -115,12 +108,12 @@
   fbq('init', '2307260859745966');
   fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=2307260859745966&ev=PageView&noscript=1"
-  /></noscript>
   </head>
 
 <body>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2307260859745966&ev=PageView&noscript=1"
+  /></noscript>
   <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
