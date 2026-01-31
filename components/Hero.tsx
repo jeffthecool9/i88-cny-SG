@@ -2,20 +2,17 @@ import React from "react";
 import { motion, Variants } from "framer-motion";
 import CountdownTimer, { trackEvent } from "./CountdownTimer";
 
-const Hero: React.FC<{ onOpenTutorial?: () => void }> = () => {
-  /* =============================
-     Animation presets
-  ============================= */
+const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
   const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.12 },
+      transition: { staggerChildren: 0.08, delayChildren: 0.1 },
     },
   };
 
   const item: Variants = {
-    hidden: { opacity: 0, y: 10, scale: 0.98 },
+    hidden: { opacity: 0, y: 10, scale: 0.985 },
     show: {
       opacity: 1,
       y: 0,
@@ -31,52 +28,58 @@ const Hero: React.FC<{ onOpenTutorial?: () => void }> = () => {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
-      {/* =============================
-         Background (bg-2.png)
-         Keep original brightness
-      ============================= */}
+      {/* ===== Background ===== */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
-          src="/bg-2.png"
+          src="/cny-bg.png"
           alt="CNY Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover brightness-105 contrast-105"
           draggable={false}
         />
-
-        {/* ultra-light vignette only for text readability */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(255,255,255,0.05)_0%,rgba(0,0,0,0.12)_60%,rgba(0,0,0,0.18)_100%)]" />
+        {/* Light readability only (no heavy fade) */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.06)_0%,rgba(0,0,0,0.10)_58%,rgba(0,0,0,0.16)_100%)]" />
       </div>
 
-      {/* =============================
-         Top content
-      ============================= */}
+      {/* ===== Art-directed overlay canvas ===== */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto w-full max-w-xl px-6 pt-10 sm:pt-12 text-center"
+        className="relative z-10 mx-auto w-full max-w-xl px-6 min-h-screen"
       >
-        {/* Logo */}
-        <motion.div variants={item} className="flex justify-center mb-3">
+        {/* =========================
+            TOP SAFE ZONE (Logo)
+            - Keep small and high, not disturbing title
+        ========================== */}
+        <motion.div
+          variants={item}
+          className="absolute left-1/2 -translate-x-1/2"
+          style={{ top: "clamp(14px, 2.8vh, 24px)" }}
+        >
           <img
             src="/android-chrome-192x192.png"
             alt="i88"
-            className="h-20 sm:h-24 w-auto object-contain"
+            className="h-12 sm:h-14 w-auto object-contain"
             draggable={false}
           />
         </motion.div>
 
-        {/* =============================
-           TITLE — PRESET B
-           (lifted upward to free space)
-        ============================= */}
+        {/* =========================
+            TITLE ZONE (Big 八仙来财)
+            - Anchored to top third, never drifts down
+        ========================== */}
         <motion.div
           variants={item}
-          className="relative text-center top-[-36px] sm:top-[-56px] md:top-[-64px]"
+          className="absolute left-1/2 -translate-x-1/2 text-center w-full"
+          style={{ top: "clamp(54px, 9vh, 88px)" }}
         >
-          <h1 className="text-7xl sm:text-8xl font-black leading-[0.85] uppercase tracking-tighter flex flex-col items-center">
-            <span className="block text-white/95">八仙</span>
-            <span className="laicai-gold-flat">来财</span>
+          <h1 className="font-black leading-[0.84] uppercase tracking-tighter flex flex-col items-center">
+            <span className="block text-[64px] sm:text-[76px] text-white/95">
+              八仙
+            </span>
+            <span className="laicai-gold-flat text-[64px] sm:text-[76px]">
+              来财
+            </span>
           </h1>
 
           <div className="mt-3 flex items-center justify-center gap-4">
@@ -88,64 +91,71 @@ const Hero: React.FC<{ onOpenTutorial?: () => void }> = () => {
           </div>
         </motion.div>
 
-        {/* =============================
-           Copy (centered, unobstructed)
-        ============================= */}
-        <motion.p
+        {/* =========================
+            COPY ZONE (Move UP)
+            - Must NOT sit on immortals
+            - Keep it in the “red area” above the artwork
+        ========================== */}
+        <motion.div
           variants={item}
-          className="mt-2 text-white/90 text-sm sm:text-base leading-relaxed max-w-[520px] mx-auto"
+          className="absolute left-1/2 -translate-x-1/2 text-center w-full px-2"
+          style={{ top: "clamp(300px, 42vh, 360px)" }}
         >
-          Play with i88 and get rewarded instantly. Try the demo spin below and
-          unlock your welcome reward after registration.
-        </motion.p>
+          <p className="heroGoldCopy text-[14px] sm:text-[16px] leading-relaxed max-w-[520px] mx-auto">
+            Play with i88 and get rewarded instantly. Try the demo spin below and
+            unlock your welcome reward after registration.
+          </p>
+        </motion.div>
+
+        {/* =========================
+            BOTTOM BAND ZONE (Timer + CTA)
+            - LOCKED to bottom area so it stays on the blue band
+            - This is the key: it will NOT float up onto the immortals
+        ========================== */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 w-full px-6"
+          style={{ bottom: "clamp(14px, 2.5vh, 26px)" }}
+        >
+          {/* Dock strip only behind timer+cta (keeps text readable, not full-screen fade) */}
+          <div className="mx-auto w-full max-w-xl rounded-[28px] p-4 sm:p-5 dockStrip">
+            {/* Timer (make labels readable against busy art) */}
+            <motion.div variants={item} className="flex justify-center mb-4">
+              <CountdownTimer pageVariant="cny_visual_v2" />
+            </motion.div>
+
+            {/* CTA */}
+            <motion.div variants={item} className="flex justify-center">
+              <div className="relative w-[96%] sm:w-[86%]">
+                <div
+                  className="absolute -inset-1 rounded-[2.6rem] blur-xl opacity-30 hover:opacity-45 transition duration-700"
+                  style={{
+                    background:
+                      "linear-gradient(90deg,#F9D976,#E0AA3E,#FAF398,#B88A44)",
+                  }}
+                />
+                <button
+                  onClick={handleCtaClick}
+                  className="relative w-full py-6 rounded-[2.6rem]
+                             font-black text-xl sm:text-2xl uppercase tracking-widest
+                             shadow-[0_25px_60px_rgba(0,0,0,0.55)]
+                             transition-transform hover:-translate-y-1 active:translate-y-1
+                             border-b-8"
+                  style={{
+                    background:
+                      "linear-gradient(180deg,#fff7cc,#FAF398,#F9D976,#E0AA3E,#B88A44)",
+                    color: "#7a0606",
+                    borderBottomColor: "#7a5a20",
+                  }}
+                >
+                  Pre-Register Now
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </motion.div>
 
-      {/* =============================
-         Bottom dock
-         Timer + CTA moved DOWN
-         (does NOT block immortals)
-      ============================= */}
-      <div className="absolute inset-x-0 bottom-6 sm:bottom-10 z-20">
-        <div className="mx-auto w-full max-w-xl px-6 flex flex-col items-center">
-          {/* Timer */}
-          <motion.div variants={item} className="mb-4">
-            <CountdownTimer pageVariant="cny_visual_preset_b" />
-          </motion.div>
-
-          {/* CTA */}
-          <motion.div variants={item} className="w-full flex justify-center">
-            <div className="relative w-[92%] sm:w-[86%]">
-              <div
-                className="absolute -inset-1 rounded-[2.6rem] blur-xl opacity-30"
-                style={{
-                  background:
-                    "linear-gradient(90deg,#F9D976,#E0AA3E,#FAF398,#B88A44)",
-                }}
-              />
-              <button
-                onClick={handleCtaClick}
-                className="relative w-full py-6 rounded-[2.6rem]
-                           font-black text-xl sm:text-2xl uppercase tracking-widest
-                           shadow-[0_25px_60px_rgba(0,0,0,0.55)]
-                           transition-transform hover:-translate-y-1 active:translate-y-1
-                           border-b-8"
-                style={{
-                  background:
-                    "linear-gradient(180deg,#fff7cc,#FAF398,#F9D976,#E0AA3E,#B88A44)",
-                  color: "#7a0606",
-                  borderBottomColor: "#7a5a20",
-                }}
-              >
-                Pre-Register Now
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* =============================
-         Styles
-      ============================= */}
+      {/* ===== Styles ===== */}
       <style>{`
         .laicai-gold-flat {
           background: linear-gradient(
@@ -163,6 +173,28 @@ const Hero: React.FC<{ onOpenTutorial?: () => void }> = () => {
             0 0 14px rgba(250,217,118,0.35),
             0 0 36px rgba(224,170,62,0.25);
           letter-spacing: 0.02em;
+        }
+
+        /* More “character” than plain white */
+        .heroGoldCopy{
+          color: rgba(255, 244, 214, 0.95);
+          text-shadow:
+            0 2px 16px rgba(0,0,0,0.55),
+            0 0 24px rgba(224,170,62,0.12);
+        }
+
+        /* Dock only behind timer + CTA */
+        .dockStrip{
+          background: linear-gradient(
+            180deg,
+            rgba(0,0,0,0.18) 0%,
+            rgba(0,0,0,0.30) 100%
+          );
+          border: 1px solid rgba(249,242,149,0.14);
+          box-shadow:
+            0 16px 60px rgba(0,0,0,0.45),
+            inset 0 1px 0 rgba(255,255,255,0.05);
+          backdrop-filter: blur(10px);
         }
       `}</style>
     </section>
