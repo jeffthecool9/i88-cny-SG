@@ -64,19 +64,12 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           </motion.div>
 
           {/* Title */}
-          <motion.div variants={item}>
-            <h1 className="text-7xl sm:text-8xl font-black leading-[0.85] uppercase tracking-tighter flex flex-col items-center">
-              <span className="block text-white/95">八仙</span>
-              <span className="laicai-gold-flat">来财</span>
-            </h1>
+      <motion.div
+  variants={item}
+  className="absolute left-1/2 -translate-x-1/2 text-center"
+  style={{ top: "clamp(64px, 10vh, 96px)" }}
+>
 
-            <div className="mt-3 flex items-center justify-center gap-4">
-              <div className="h-px w-10 bg-[#F9D976]/50" />
-              <p className="text-[#fff3d6] font-black text-xs uppercase tracking-[0.45em]">
-                8 Immortals Treasure
-              </p>
-              <div className="h-px w-10 bg-[#F9D976]/50" />
-            </div>
 
             {/* ✅ Gold-ish headline copy (more character than plain white) */}
             <p className="mt-4 text-[15px] sm:text-base leading-relaxed max-w-[520px] mx-auto heroGoldCopy">
