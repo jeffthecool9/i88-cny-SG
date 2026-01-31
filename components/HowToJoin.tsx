@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { trackEvent } from "./CountdownTimer";
 
 /* SAME CTA LOOK */
-const CTA_URL = "https://www.palacehub8.com/LlZEMHit"; 
+const CTA_URL = "https://www.palacehub8.com/uRzAiwOg"; 
 
 const HowToJoin: React.FC = () => {
   // 🔴 THIS IS THE FIX: Explicitly naming it "CTA Button 3"
