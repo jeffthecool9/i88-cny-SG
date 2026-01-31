@@ -29,7 +29,7 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex flex-col">
       {/* =========================
-          Background (NO black fade)
+          Background (keep bright)
       ========================== */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
@@ -38,21 +38,21 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           className="w-full h-full object-cover brightness-105 contrast-105"
           draggable={false}
         />
-        {/* ultra-light vignette only */}
+        {/* light vignette only */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_22%,rgba(255,255,255,0.05)_0%,rgba(0,0,0,0.10)_60%,rgba(0,0,0,0.16)_100%)]" />
       </div>
 
       {/* =========================
-          Top Content (NEVER overlaps)
+          Top Content (moved up)
       ========================== */}
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="relative z-10 mx-auto w-full max-w-xl px-6 pt-10 sm:pt-12 text-center"
+        className="relative z-10 mx-auto w-full max-w-xl px-6 pt-7 sm:pt-9 text-center"
       >
         {/* Logo */}
-        <motion.div variants={item} className="flex justify-center mb-4">
+        <motion.div variants={item} className="flex justify-center mb-3">
           <img
             src="/android-chrome-192x192.png"
             alt="i88"
@@ -62,7 +62,7 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
         </motion.div>
 
         {/* Title */}
-        <motion.div variants={item} className="mb-4">
+        <motion.div variants={item} className="mb-3">
           <h1 className="text-7xl sm:text-8xl font-black leading-[0.85] uppercase tracking-tighter flex flex-col items-center">
             <span className="block text-white/95">八仙</span>
             <span className="laicai-gold-flat">来财</span>
@@ -76,7 +76,8 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
             <div className="h-px w-10 bg-[#F9D976]/50" />
           </div>
 
-          <p className="mt-4 text-white/90 text-sm sm:text-base leading-relaxed max-w-[520px] mx-auto">
+          {/* ✅ GOLD + BOLD + CHARACTER */}
+          <p className="mt-3 heroGoldText text-sm sm:text-base leading-relaxed max-w-[520px] mx-auto">
             Play with i88 and get rewarded instantly. Try the demo spin below and
             unlock your welcome reward after registration.
           </p>
@@ -84,8 +85,7 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
       </motion.div>
 
       {/* =========================
-          Bottom Dock (in normal flow)
-          ✅ This guarantees no overlap
+          Bottom Dock
       ========================== */}
       <div className="relative z-20 mt-auto pb-10 sm:pb-12">
         <div className="mx-auto w-full max-w-xl px-6 flex flex-col items-center">
@@ -139,11 +139,30 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
-          -webkit-text-stroke: 0;
           text-shadow:
             0 0 14px rgba(250,217,118,0.35),
             0 0 36px rgba(224,170,62,0.25);
           letter-spacing: 0.02em;
+        }
+
+        /* ✅ paragraph gold + stronger */
+        .heroGoldText{
+          font-weight: 800;
+          letter-spacing: 0.02em;
+          background: linear-gradient(
+            180deg,
+            #fff 0%,
+            #FAF398 22%,
+            #F9D976 55%,
+            #E0AA3E 82%,
+            #B88A44 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          text-shadow:
+            0 2px 18px rgba(0,0,0,0.55),
+            0 0 22px rgba(224,170,62,0.20);
         }
       `}</style>
     </section>
