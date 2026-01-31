@@ -36,7 +36,6 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           className="w-full h-full object-cover brightness-105 contrast-105"
           draggable={false}
         />
-        {/* Subtle vignette to help text readability without darkening the art too much */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(0,0,0,0)_40%,rgba(0,0,0,0.3)_100%)]" />
       </div>
 
@@ -46,15 +45,13 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
         initial="hidden"
         animate="show"
         className="relative z-10 mx-auto w-full max-w-xl px-5
-                   h-full flex flex-col justify-between" 
-        // ^ justify-between pushes Top and Bottom apart to reveal the middle art
+                   h-full flex flex-col justify-between"
       >
         
-        {/* ===== TOP CONTENT (Lifted Upwards) ===== */}
-        {/* Reduced top padding from pt-10 to pt-5 to clear the Immortals' heads */}
-        <div className="pt-5 text-center flex flex-col items-center">
+        {/* ===== TOP CONTENT GROUP ===== */}
+        <div className="pt-4 sm:pt-6 text-center flex flex-col items-center">
           
-          {/* Logo - Made slightly smaller to save vertical space */}
+          {/* Logo */}
           <motion.div variants={item} className="mb-2">
             <img
               src="/android-chrome-192x192.png"
@@ -80,31 +77,32 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
               <div className="h-px w-8 bg-[#F9D976]/50" />
             </div>
 
-            {/* Description - Constrained width to prevent it from covering side art */}
+            {/* Description Text */}
             <p className="mt-3 text-sm leading-tight max-w-[340px] mx-auto heroGoldCopy">
               Play with i88 and get rewarded instantly. Try the demo spin below and
               unlock your welcome reward.
             </p>
           </motion.div>
+
+          {/* ➤ MOVED TIMER HERE (Directly below white text) */}
+          <motion.div variants={item} className="mt-5 w-full flex justify-center">
+             {/* Scaled slightly down to fit better in the top cluster */}
+            <div className="scale-[0.9] sm:scale-100 origin-top">
+               <CountdownTimer pageVariant="cny_visual_v2" />
+            </div>
+          </motion.div>
         </div>
 
-        {/* ===== MIDDLE VOID ===== */}
-        {/* This invisible spacer ensures the middle art is fully visible */}
+        {/* ===== MIDDLE SPACER ===== */}
+        {/* Keeps the artwork visible in the center */}
         <div className="flex-grow" /> 
 
-        {/* ===== BOTTOM DOCK (Pushed Downwards) ===== */}
-        {/* Reduced padding to let the Treasure Chest show above the button */}
-        <div className="pb-6 sm:pb-8 w-full flex flex-col items-center">
+        {/* ===== BOTTOM DOCK ===== */}
+        <div className="pb-8 sm:pb-10 w-full flex flex-col items-center">
           
-          {/* Timer - Compacted margin */}
-          <motion.div variants={item} className="w-full flex justify-center mb-3">
-            <CountdownTimer pageVariant="cny_visual_v2" />
-          </motion.div>
-
           {/* CTA Button */}
           <motion.div variants={item} className="w-full flex justify-center">
             <div className="relative w-[90%] sm:w-[80%]">
-              {/* Glow Effect */}
               <div
                 className="absolute -inset-1 rounded-[2.6rem] blur-xl opacity-30 hover:opacity-45 transition duration-700"
                 style={{
@@ -160,7 +158,6 @@ const Hero: React.FC<{ onOpenTutorial: () => void }> = () => {
           text-shadow: 0 1px 4px rgba(0,0,0,0.8);
         }
 
-        /* Utility helper for stronger shadows on small text */
         .text-shadow-sm {
            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
