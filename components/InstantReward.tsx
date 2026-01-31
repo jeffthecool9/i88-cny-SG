@@ -98,6 +98,9 @@ const InstantReward: React.FC = () => {
     setShowWin(false);
     finishedRef.current = false;
 
+    // Optional: Track Spin Click
+    trackEvent("MiniGame_Spin_Clicked", { location: "Wheel" });
+
     const sliceStart = forcedWinIndex * anglePerSegment;
     const SAFE_MARGIN_DEG = 6;
     const FREE_TARGET_IN_SLICE_DEG = 24;
@@ -137,10 +140,12 @@ const InstantReward: React.FC = () => {
     return () => el.removeEventListener("transitionend", onEnd);
   }, []);
 
-  // 🔴 THIS IS THE FIX: Handle CTA Button 2
+  // 🔴 HANDLER FOR CTA BUTTON 2
   const handleClaimClick = () => {
     trackEvent("CTA Button 2", { location: "Wheel Win Popup" });
-    // Don't need window.open here because it's wrapped in an <a> tag
+    if ((window as any).fbq) {
+        (window as any).fbq('track', 'Lead', { content_name: 'Wheel Prize Claim' });
+    }
   };
 
   return (
@@ -298,4 +303,62 @@ const InstantReward: React.FC = () => {
                 ${isSpinning ? "animate-vibrate" : "hover:scale-105 active:scale-95"}
                 ${isLimitReached ? "opacity-70 cursor-not-allowed" : ""}`}
             >
-              <div className="absolute
+              <div className="absolute top-0 w-full h-9 sm:h-12 bg-[#c41212] rounded-b-[18px] border-b border-white/20" />
+              <span className="relative z-10 text-[#F9F295] text-4xl sm:text-5xl font-black drop-shadow-[0_6px_18px_rgba(0,0,0,0.55)]">福</span>
+              <span className="relative z-10 text-[#F9F295] text-[10px] sm:text-xs font-black tracking-[0.35em] uppercase">SPIN</span>
+            </button>
+          )}
+        </div>
+
+        {showWin && (
+          <a
+            href={CTA_URL}
+            target="_blank"
+            rel="noreferrer"
+            onClick={handleClaimClick}
+            className="mt-8 block w-full rounded-[22px] p-[2px] goldBorder hover:scale-[1.01] active:scale-[0.99] transition-transform"
+          >
+            <div className="rounded-[20px] px-6 py-5 text-center bg-[#240202] shadow-[0_24px_90px_rgba(0,0,0,0.65)]">
+              <div className="text-[10px] sm:text-[11px] tracking-[0.55em] uppercase font-black text-[#F9F295]/70 mb-2">
+                CONGRATULATIONS
+              </div>
+              <div className="winGoldHeadline text-[22px] sm:text-[28px] font-black leading-tight">
+                YOU WON 88 FREE SPINS
+                <div className="text-[16px] sm:text-[18px] mt-1">ON SLOT</div>
+              </div>
+              <div className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full goldButton">
+                <span className="text-[11px] sm:text-xs font-black tracking-[0.35em] uppercase text-black/90">
+                  Register & Claim 88 Free Spins
+                </span>
+                <span className="text-black/85 font-black">→</span>
+              </div>
+            </div>
+          </a>
+        )}
+      </div>
+
+      <style>{`
+        @keyframes vibrate {
+          0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+          25% { transform: translate(calc(-50% + 1px), calc(-50% + 1px)) rotate(0.35deg); }
+          75% { transform: translate(calc(-50% - 1px), calc(-50% - 1px)) rotate(-0.35deg); }
+        }
+        .animate-vibrate { animation: vibrate 0.18s linear infinite; }
+        .winPopInner{ animation: winPopInner 520ms cubic-bezier(0.2,1,0.3,1) both; }
+        @keyframes winPopInner{ from{ transform: scale(0.985); } to{ transform: scale(1); } }
+        .goldTitle{ background: linear-gradient(180deg,#fff,#FAF398 18%,#F9F295 42%,#E0AA3E 72%,#B88A44); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow: 0 10px 40px rgba(0,0,0,0.65), 0 0 18px rgba(253,224,71,0.22); }
+        .goldPill{ width: 100%; padding: 14px 18px; border-radius: 999px; background: linear-gradient(90deg,#F9F295,#E0AA3E,#FAF398,#B88A44); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 12px 40px rgba(0,0,0,0.45); border: 1px solid rgba(0,0,0,0.18); }
+        .goldPillText{ display:block; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.82); font-size: 14px; line-height: 1.15; text-align: center; }
+        @media (min-width: 640px){ .goldPillText{ font-size: 16px; } }
+        .baseGlow{ background: radial-gradient(circle at 50% 40%, rgba(238,28,37,0.25), transparent 60%); filter: blur(18px); }
+        .winGlow{ background: radial-gradient(circle at 50% 40%, rgba(253,224,71,0.28), transparent 62%), radial-gradient(circle at 50% 60%, rgba(238,28,37,0.25), transparent 62%); filter: blur(16px); animation: winGlowPulse 1.2s ease-in-out infinite; }
+        @keyframes winGlowPulse{ 0%,100%{ transform: scale(1); opacity: 0.95; } 50%{ transform: scale(1.03); opacity: 0.75; } }
+        .goldBorder{ background: linear-gradient(90deg,#F9F295,#E0AA3E,#FAF398,#B88A44); box-shadow: 0 16px 60px rgba(0,0,0,0.45); }
+        .winGoldHeadline{ background: linear-gradient(180deg,#fff,#FAF398 18%,#F9F295 42%,#E0AA3E 72%,#B88A44); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow: 0 0 18px rgba(253,224,71,0.25), 0 10px 34px rgba(0,0,0,0.7); }
+        .goldButton{ background: linear-gradient(90deg,#F9F295,#E0AA3E,#FAF398,#B88A44); box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 12px 40px rgba(0,0,0,0.45); border: 1px solid rgba(0,0,0,0.15); }
+      `}</style>
+    </section>
+  );
+};
+
+export default InstantReward;
