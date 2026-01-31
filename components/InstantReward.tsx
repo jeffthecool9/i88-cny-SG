@@ -7,7 +7,7 @@ import { trackEvent } from "./CountdownTimer";
 ============================= */
 const MAX_SPINS = 1;
 const SPIN_SECONDS = 4;
-const CTA_URL = "https://www.palacehub8.com/LlZEMHit"; 
+const CTA_URL = "https://www.palacehub8.com/uRzAiwOg"; 
 
 type Prize = {
   id: string;
