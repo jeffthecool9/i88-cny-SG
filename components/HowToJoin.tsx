@@ -1,15 +1,45 @@
 import React from "react";
 import { motion } from "framer-motion";
-// 🔴 IMPORT TRACKER
 import { trackEvent } from "./CountdownTimer";
 
-/* SAME CTA LOOK */
-const CTA_URL = "https://www.palacehub8.com/uRzAiwOg"; 
+/* CTA LINK (SG) */
+const CTA_URL = "https://www.palacehub8.com/uRzAiwOg";
+
+/** ✅ Meta Pixel tracker */
+const trackMetaCTA = (ctaPosition: "cta1" | "cta2" | "cta3") => {
+  if (typeof window === "undefined") return;
+  const w = window as any;
+  if (!w.fbq) return;
+
+  // Standard event for optimization
+  w.fbq("track", "Lead", { cta_position: ctaPosition });
+
+  // Optional custom event for debugging / reporting
+  const custom =
+    ctaPosition === "cta1"
+      ? "CTA_Button_1"
+      : ctaPosition === "cta2"
+      ? "CTA_Button_2"
+      : "CTA_Button_3";
+
+  w.fbq("trackCustom", custom);
+};
 
 const HowToJoin: React.FC = () => {
-  // 🔴 THIS IS THE FIX: Explicitly naming it "CTA Button 3"
-  const handleJoinClick = () => {
-    trackEvent("CTA Button 3", { location: "Footer Section" });
+  const handleJoinClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // ✅ Stop instant navigation so pixel can send
+    e.preventDefault();
+
+    // ✅ Your internal tracking
+    trackEvent("CTA Button 3", { location: "Footer Section SG" });
+
+    // ✅ Meta tracking
+    trackMetaCTA("cta3");
+
+    // ✅ Open after tiny delay
+    setTimeout(() => {
+      window.open(CTA_URL, "_blank", "noopener,noreferrer");
+    }, 150);
   };
 
   return (
@@ -22,7 +52,6 @@ const HowToJoin: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          {/* GOLD TITLE */}
           <h2 className="text-5xl font-black uppercase tracking-tighter mb-4 goldText">
             How To <span className="italic">Join</span>
           </h2>
@@ -89,9 +118,7 @@ const HowToJoin: React.FC = () => {
                 Enjoy your{" "}
                 <span className="text-white">88+100 total free spins</span>! And
                 explore the{" "}
-                <span className="text-white">
-                  8 Immortals Treasure Event
-                </span>
+                <span className="text-white">8 Immortals Treasure Event</span>
               </p>
             </div>
           </motion.div>
@@ -113,7 +140,7 @@ const HowToJoin: React.FC = () => {
             href={CTA_URL}
             target="_blank"
             rel="noreferrer"
-            onClick={handleJoinClick} // 🔴 ADDED CLICK HANDLER HERE
+            onClick={handleJoinClick}
             className="inline-flex items-center justify-center gap-3
                        px-9 py-4 rounded-full goldButton
                        hover:scale-[1.03] active:scale-[0.97]
@@ -127,7 +154,6 @@ const HowToJoin: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* STYLES */}
       <style>{`
         .goldText{
           background: linear-gradient(90deg,#F9F295,#E0AA3E,#FAF398,#B88A44);
